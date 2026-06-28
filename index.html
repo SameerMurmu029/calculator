@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A premium, dark-themed calculator and unit converter web application built with HTML, CSS, and vanilla JavaScript.">
+    <title>Modern Dark-Themed Calculator & Converter</title>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <main class="app-container">
+        <div class="calculator-card">
+            <!-- Header Tabs -->
+            <header class="tab-header">
+                <button id="tab-calculator" class="tab-btn active" aria-selected="true" aria-controls="calculator-view">Calculator</button>
+                <button id="tab-converter" class="tab-btn" aria-selected="false" aria-controls="converter-view">Converter</button>
+                <div class="tab-underline"></div>
+            </header>
+
+            <!-- Views Container -->
+            <div class="views-wrapper">
+                <!-- Calculator View -->
+                <section id="calculator-view" class="view-panel active" aria-hidden="false">
+                    <!-- Display Area -->
+                    <div class="display-area" id="calc-display-area">
+                        <div class="display-history" id="calc-history" aria-live="polite">&nbsp;</div>
+                        <div class="display-current" id="calc-current" aria-live="polite">0</div>
+                    </div>
+                </section>
+
+                <!-- Converter View -->
+                <section id="converter-view" class="view-panel" aria-hidden="true">
+                    <!-- Display Area -->
+                    <div class="display-area converter-display">
+                        <!-- Category Selector -->
+                        <div class="converter-row category-row">
+                            <label>Category</label>
+                            <div class="custom-select" id="select-category">
+                                <select id="converter-category" style="display: none;">
+                                    <option value="length">Length</option>
+                                    <option value="weight">Weight</option>
+                                    <option value="temperature">Temperature</option>
+                                </select>
+                                <button class="select-trigger" aria-haspopup="listbox" aria-expanded="false" id="category-trigger">
+                                    <span class="trigger-label">Length</span>
+                                    <svg class="select-arrow" viewBox="0 0 24 24" width="16" height="16"><path d="M7 10l5 5 5-5H7z" fill="currentColor"/></svg>
+                                </button>
+                                <div class="select-dropdown" role="listbox"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- From Unit and Input Display -->
+                        <div class="converter-row input-row active" id="converter-from-container">
+                            <div class="custom-select" id="select-from-unit">
+                                <select id="converter-from-unit" aria-label="From Unit" style="display: none;"></select>
+                                <button class="select-trigger" aria-haspopup="listbox" aria-expanded="false" id="from-unit-trigger">
+                                    <span class="trigger-label">-</span>
+                                    <svg class="select-arrow" viewBox="0 0 24 24" width="16" height="16"><path d="M7 10l5 5 5-5H7z" fill="currentColor"/></svg>
+                                </button>
+                                <div class="select-dropdown" role="listbox"></div>
+                            </div>
+                            <div class="converter-value" id="converter-from-value">0</div>
+                        </div>
+
+                        <!-- To Unit and Output Display -->
+                        <div class="converter-row output-row" id="converter-to-container">
+                            <div class="custom-select" id="select-to-unit">
+                                <select id="converter-to-unit" aria-label="To Unit" style="display: none;"></select>
+                                <button class="select-trigger" aria-haspopup="listbox" aria-expanded="false" id="to-unit-trigger">
+                                    <span class="trigger-label">-</span>
+                                    <svg class="select-arrow" viewBox="0 0 24 24" width="16" height="16"><path d="M7 10l5 5 5-5H7z" fill="currentColor"/></svg>
+                                </button>
+                                <div class="select-dropdown" role="listbox"></div>
+                            </div>
+                            <div class="converter-value" id="converter-to-value">0</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Divider Line -->
+            <hr class="divider">
+
+            <!-- Keypad Grid -->
+            <section class="keypad-grid" aria-label="Keypad">
+                <!-- Row 1 -->
+                <button class="key-btn action-key" data-key="clear" id="key-clear">C</button>
+                <button class="key-btn action-key" data-key="toggle-sign" id="key-sign">±</button>
+                <button class="key-btn action-key" data-key="percent" id="key-percent">%</button>
+                <button class="key-btn operator-key" data-operator="divide" id="key-divide">÷</button>
+
+                <!-- Row 2 -->
+                <button class="key-btn number-key" data-number="7">7</button>
+                <button class="key-btn number-key" data-number="8">8</button>
+                <button class="key-btn number-key" data-number="9">9</button>
+                <button class="key-btn operator-key" data-operator="multiply" id="key-multiply">×</button>
+
+                <!-- Row 3 -->
+                <button class="key-btn number-key" data-number="4">4</button>
+                <button class="key-btn number-key" data-number="5">5</button>
+                <button class="key-btn number-key" data-number="6">6</button>
+                <button class="key-btn operator-key" data-operator="subtract" id="key-subtract">−</button>
+
+                <!-- Row 4 -->
+                <button class="key-btn number-key" data-number="1">1</button>
+                <button class="key-btn number-key" data-number="2">2</button>
+                <button class="key-btn number-key" data-number="3">3</button>
+                <button class="key-btn operator-key" data-operator="add" id="key-add">+</button>
+
+                <!-- Row 5 -->
+                <button class="key-btn parenthesis-key" data-key="parenthesis" id="key-parenthesis">( )</button>
+                <button class="key-btn number-key" data-number="0">0</button>
+                <button class="key-btn decimal-key" data-key="decimal">.</button>
+                <button class="key-btn equals-key" data-key="equals" id="key-equals">=</button>
+            </section>
+        </div>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+/* CSS Custom Properties for theme consistency */
+:root {
+    --bg-page: #0b0c0e;
+    --bg-calculator: #181818;
+    --bg-button: #282828;
+    --bg-button-hover: #333333;
+    --bg-button-active: #3e3e3e;
+    
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #a3a3a3;
+    --color-text-muted: #737373;
+    
+    --color-orange: #ff6b4a;
+    --color-orange-hover: #ff7f61;
+    --color-orange-active: #e55c3c;
+
+    --color-red: #ff5e5e;
+    --color-red-hover: #ff7878;
+    --color-red-active: #e54646;
+    
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    
+    --transition-speed: 0.25s;
+    --transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Global Reset & Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-page);
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 107, 74, 0.04) 0%, transparent 60%),
+        radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.04) 0%, transparent 60%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text-primary);
+    padding: 20px;
+}
+
+/* Main Container */
+.app-container {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Calculator Card */
+.calculator-card {
+    background-color: var(--bg-calculator);
+    width: 100%;
+    border-radius: 36px;
+    padding: 28px 24px 28px 24px;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Header Tabs */
+.tab-header {
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 8px;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    font-family: var(--font-primary);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: color var(--transition-speed) ease;
+    outline: none;
+    position: relative;
+    z-index: 1;
+}
+
+.tab-btn:hover {
+    color: var(--color-text-secondary);
+}
+
+.tab-btn.active {
+    color: var(--color-orange);
+    font-weight: 600;
+}
+
+.tab-underline {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background-color: var(--color-orange);
+    width: 50%;
+    transition: transform var(--transition-speed) var(--transition-spring);
+    transform: translateX(0);
+}
+
+/* Views Wrapper with transition */
+.views-wrapper {
+    position: relative;
+    min-height: 140px;
+    margin-bottom: 8px;
+    display: flex;
+    overflow: visible;
+    z-index: 10;
+}
+
+.view-panel {
+    width: 100%;
+    flex-shrink: 0;
+    transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
+    opacity: 0;
+    display: none;
+}
+
+.view-panel.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Display Area styling */
+.display-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
+    height: 140px;
+    text-align: right;
+    padding: 8px 4px;
+}
+
+.display-history {
+    font-size: 16px;
+    color: var(--color-text-muted);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    min-height: 24px;
+    margin-bottom: 12px;
+    word-break: break-all;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.display-history::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+.display-current {
+    font-size: 54px;
+    font-weight: 300;
+    color: var(--color-text-primary);
+    line-height: 1.1;
+    word-break: break-all;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.display-current::-webkit-scrollbar {
+    display: none;
+}
+
+/* Converter Specific Styles */
+.converter-display {
+    height: auto;
+    justify-content: flex-start;
+    padding: 0;
+}
+
+.converter-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.converter-row.active {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.category-row {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-bottom: 12px;
+}
+
+.category-row label {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+/* Custom Select Dropdowns */
+.custom-select {
+    position: relative;
+    width: 40%;
+}
+
+.category-row .custom-select {
+    width: 55%;
+}
+
+.select-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: var(--color-text-primary);
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.select-trigger:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.select-arrow {
+    width: 16px;
+    height: 16px;
+    fill: var(--color-text-secondary);
+    transition: transform var(--transition-speed) ease;
+    margin-left: 4px;
+}
+
+.custom-select.open .select-arrow {
+    transform: rotate(180deg);
+}
+
+/* Glassmorphic Dropdown List */
+.select-dropdown {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background: rgba(25, 25, 27, 0.75);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    padding: 6px;
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    pointer-events: none;
+    transition: 
+        opacity var(--transition-speed) cubic-bezier(0.16, 1, 0.3, 1), 
+        transform var(--transition-speed) cubic-bezier(0.16, 1, 0.3, 1);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.select-dropdown::-webkit-scrollbar {
+    width: 4px;
+}
+
+.select-dropdown::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.custom-select.open .select-dropdown {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Option Styles */
+.select-option {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    user-select: none;
+    text-align: left;
+}
+
+.select-option:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--color-text-primary);
+}
+
+.select-option.selected {
+    background-color: rgba(255, 107, 74, 0.15);
+    color: var(--color-orange);
+    font-weight: 500;
+}
+
+.converter-value {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    max-width: 60%;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.converter-value::-webkit-scrollbar {
+    display: none;
+}
+
+.output-row {
+    cursor: pointer;
+}
+
+.input-row.active .converter-value, .output-row.active .converter-value {
+    color: var(--color-orange);
+}
+
+/* Divider Line */
+.divider {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.08);
+    margin: 16px 0;
+}
+
+/* Keypad Grid styling */
+.keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+/* Button Base Styles */
+.key-btn {
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--bg-button);
+    color: var(--color-text-primary);
+    font-family: var(--font-primary);
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 
+        background-color var(--transition-speed) ease,
+        transform 0.1s var(--transition-spring),
+        box-shadow 0.1s ease;
+    user-select: none;
+    outline: none;
+}
+
+/* Hover and press states */
+.key-btn:hover {
+    background-color: var(--bg-button-hover);
+}
+
+.key-btn:active {
+    background-color: var(--bg-button-active);
+    transform: scale(0.92);
+}
+
+/* Action key modifiers (C, ±, %) */
+.action-key {
+    color: var(--color-text-secondary);
+    font-weight: 400;
+}
+
+#key-clear {
+    color: var(--color-red);
+}
+
+#key-clear:hover {
+    background-color: rgba(255, 94, 94, 0.08);
+    color: var(--color-red-hover);
+}
+
+#key-clear:active {
+    background-color: rgba(255, 94, 94, 0.16);
+    color: var(--color-red-active);
+    transform: scale(0.92);
+}
+
+/* Operator keys (÷, ×, −, +, =) */
+.operator-key {
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--color-text-primary);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.operator-key:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.operator-key.active-operator {
+    background-color: var(--color-text-primary);
+    color: var(--bg-calculator);
+}
+
+/* Parenthesis key */
+.parenthesis-key {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+}
+
+/* Equals button */
+.equals-key {
+    background-color: var(--color-orange);
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.equals-key:hover {
+    background-color: var(--color-orange-hover);
+}
+
+.equals-key:active {
+    background-color: var(--color-orange-active);
+}
+
+/* Muted buttons for Converter Mode */
+.key-btn.disabled-btn {
+    opacity: 0.25;
+    pointer-events: none;
+}
+
+/* Responsiveness adjustments */
+@media (max-width: 400px) {
+    .calculator-card {
+        padding: 24px 20px;
+        border-radius: 28px;
+    }
+    .keypad-grid {
+        gap: 10px;
+    }
+    .key-btn {
+        font-size: 18px;
+    }
+    .display-current {
+        font-size: 46px;
+    }
+}
