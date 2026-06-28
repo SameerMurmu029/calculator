@@ -781,8 +781,14 @@ document.addEventListener('DOMContentLoaded', () => {
         syncCustomDropdown('select-category');
     });
 
-    converterFromUnit.addEventListener('change', performConversion);
-    converterToUnit.addEventListener('change', performConversion);
+    converterFromUnit.addEventListener('change', () => {
+        performConversion();
+        syncCustomDropdown('select-from-unit');
+    });
+    converterToUnit.addEventListener('change', () => {
+        performConversion();
+        syncCustomDropdown('select-to-unit');
+    });
 
     function formatConverterDisplay(numStr) {
         if (numStr === '0' || numStr === '') return '0';
